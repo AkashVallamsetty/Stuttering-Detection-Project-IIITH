@@ -353,6 +353,36 @@ export default function UserDetails({
             error={formState.errors.nature?.message ? true : false}
           />
         </Grid> */}
+          <Grid item xs={6}>
+  <InputLabel id="language-label">Language *</InputLabel>{" "}
+  <Select
+    variant="outlined"
+    fullWidth
+    labelId="language-label"
+    defaultValue={""}
+    value={values.language}
+    {...register("language", {
+      required: true,
+      validate: {
+        notEmpty: (value) => value !== "" || "Please select a language",
+      },
+      onChange: handleChange("language"),
+      value: values.language,
+    })}
+    helpertext={formState.errors.language?.message}
+    error={formState.errors.language?.message ? true : false}
+  >
+    <MenuItem value=""> </MenuItem>
+    <MenuItem value="English">English</MenuItem>
+    <MenuItem value="Kannada">Kannada</MenuItem>
+  </Select>
+</Grid>
+
+<Grid item xs={6}>
+  {/* This is an empty Grid item to balance the Grid layout */}
+</Grid>
+
+
 
         <Grid item xs={6}>
           <Button

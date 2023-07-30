@@ -45,6 +45,7 @@ export default function ReadSentence({
 
   const getNewQuestion = () => {
     let idsString = "";
+    let languageselected = localStorage.getItem("selected_language"); // get selected language from localStorage, default to 'english'
     questions.map((question) => {
       idsString += question.id + ",";
     });
@@ -55,6 +56,7 @@ export default function ReadSentence({
      .get("/api/question", {
         params: {
           qids: idsString,
+          language: languageselected, // add the language parameter to the request
         },
         headers: {
           Authorization: `Bearer ${token}`,

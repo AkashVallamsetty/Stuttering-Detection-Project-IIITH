@@ -318,12 +318,13 @@ def getQuestion():
         try:
             new_question = data['question']
             bound = data['bound']
+            new_language = data['language']  # New language field
         except KeyError:
-            return jsonify({"message": "No question/bound found"}), SIGNALS['NOT_FOUND']
+            return jsonify({"message": "No question/bound/language found"}), SIGNALS['NOT_FOUND']
 
         # insert new question into db
         try:
-            db.questions.insert_one({'question': new_question, 'bound': bound})
+            db.questions.insert_one({'question': new_question, 'bound': bound,'language': new_language})
             return jsonify({"message": "Question added successfully"}), SIGNALS['OK']
         except Exception as e:
             print("Exception adding new question {}:{}").format(new_question, e)
@@ -331,6 +332,8 @@ def getQuestion():
     else:
         # get list of ids seperated by commas as a string as a query param
         ids = request.args.get('qids')
+        # get the selected language from the query params
+        language = request.args.get('language')
         # convert string to list
         if (ids is not None) and (ids != ""):
             ids = ids.split(',')
@@ -342,7 +345,7 @@ def getQuestion():
 
         try:
             question = db.questions.aggregate(
-                [{'$sample': {'size': 1}}, {'$match': {'_id': {'$nin': ids}}}])
+                [ {'$match': {'_id': {'$nin': ids},'language': language}},{'$sample': {'size': 1}}])
             return jsonify({"question": json_util.dumps(question)}), SIGNALS['OK']
         except Exception as e:
             print(e)
@@ -361,12 +364,13 @@ def getPassage():
         try:
             new_question = data['passage']
             bound = data['bound']
+            new_language = data['language']  # New language field
         except KeyError:
-            return jsonify({"message": "No passage/bound found"}), SIGNALS['NOT_FOUND']
+            return jsonify({"message": "No passage/bound/language found"}), SIGNALS['NOT_FOUND']
 
         # insert new question into db
         try:
-            db.passages.insert_one({'passage': new_question, 'bound': bound})
+            db.passages.insert_one({'passage': new_question, 'bound': bound,'language': new_language})
             return jsonify({"message": "Passage added successfully"}), SIGNALS['OK']
         except Exception as e:
             print("Exception adding new passage {}:{}").format(new_question, e)
@@ -375,6 +379,7 @@ def getPassage():
     else:
         # get list of ids seperated by commas as a string as a query param
         ids = request.args.get('pids')
+        language = request.args.get('language')
         # convert string to list
         if (ids is not None) and (ids != ""):
             ids = ids.split(',')
@@ -386,7 +391,7 @@ def getPassage():
 
         try:
             question = db.passages.aggregate(
-                [{'$sample': {'size': 1}}, {'$match': {'_id': {'$nin': ids}}}])
+                [{'$match': {'_id': {'$nin': ids},'language': language}},{'$sample': {'size': 1}}])
             return jsonify({"passage": json_util.dumps(question)}), SIGNALS['OK']
         except Exception as e:
             print(e)

@@ -224,9 +224,11 @@ export default function NewTest() {
   };
 
   const handleChange = (input) => (e) => {
-    // console.log("handle", e.target.value);
     setValues({ ...values, [input]: e.target.value });
-  };
+    if(input === 'language') {
+        localStorage.setItem("selected_language", e.target.value);
+    }
+};
 
   
   return (

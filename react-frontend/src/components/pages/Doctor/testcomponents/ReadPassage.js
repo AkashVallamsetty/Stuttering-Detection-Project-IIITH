@@ -50,6 +50,7 @@ export default function ReadPassage({
 
   const getNewPassage = () => {
     let idsString = "";
+    let languageselected = localStorage.getItem("selected_language"); // get selected language from localStorage, default to 'english'
     passages.map((passage) => {
       idsString += passage.id + ",";
     });
@@ -58,6 +59,7 @@ export default function ReadPassage({
     .get("/api/passage", {
         params: {
           pids: idsString,
+          language: languageselected, // add the language parameter to the request
         },
         headers: {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
