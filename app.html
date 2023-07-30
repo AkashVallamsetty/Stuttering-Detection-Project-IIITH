@@ -1,0 +1,59 @@
+<style>
+
+    /* button styles */
+    /* id is starter */
+    .starter {
+        height: 150px;
+        width: 225px;
+        font-size: 60px;
+        cursor: pointer;
+        border-radius: 40%;
+        background-color: #34a8cb;
+        color: white;
+        box-shadow: none;
+        border: none;
+        transition: 0.5s;
+    }
+    .starter:hover {
+        height: 200px;
+        width: 300px;
+        font-size: 80px;
+        cursor: pointer;
+        border-radius: 15%;
+        background-color: #44b8eb;
+        color: white;
+        box-shadow: none;
+        border: none;
+        /* height on hover is 350px */
+        transition: 0.5s;
+    }
+
+</style>
+
+<div>
+    <!-- display hello world in the center of the page height with font size 30-->
+    <!-- button styles -->
+  
+    <div style="height: 85vh; font-size: 10px; display: flex; align-items: center; justify-content: center;">
+        <h> <a href="http://localhost">
+                <button class = "starter">
+                    Start
+                </button>
+            </a> </h1>
+<!-- 
+            <h> 
+                <button class = "starter" id = "1">
+                    Go full screen
+                </button>
+             </h1> -->
+    </div>
+
+    <script>
+        // document.documentElement.requestFullscreen();
+        // when the button is clicked, go full screen
+        document.getElementById("1").addEventListener("click", function() {
+            document.documentElement.requestFullscreen();
+        });
+
+    </script>
+    
